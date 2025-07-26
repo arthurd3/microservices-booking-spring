@@ -11,7 +11,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class InventoryController {
 
@@ -26,4 +26,10 @@ public class InventoryController {
     public @ResponseBody VenueInventoryResponse inventoryByVenueId(@PathVariable("venueId") Long venueId){
         return inventoryService.getVenueInformation(venueId);
     }
+
+    @GetMapping("/inventory/event/{eventId}")
+    public @ResponseBody EventInventoryResponse inventoryForEvent(@PathVariable("eventId") Long eventId){
+        return inventoryService.getEventInventory(eventId);
+    }
+
 }
