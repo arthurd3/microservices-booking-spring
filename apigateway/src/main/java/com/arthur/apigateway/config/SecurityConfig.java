@@ -19,18 +19,15 @@ public class SecurityConfig {
     private String[] excludedUrls;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                // 1. Desabilita a proteção contra CSRF (Cross-Site Request Forgery)
-                .csrf(csrf -> csrf.disable())
-
-                // 2. Define as regras de autorização
-                .authorizeHttpRequests(auth -> auth
-                        // Permite todas as requisições HTTP sem a necessidade de autenticação
-                        .anyRequest().permitAll()
-                );
-
-        return http.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers(excludedUrls)
+                                .permitAll()
+                                .anyRequest().authenticated())
+                .oauth2ResourceServer(oauth ->
+                        oauth.jwt(Customizer.withDefaults()))
+                .build();
     }
 
     @Bean
