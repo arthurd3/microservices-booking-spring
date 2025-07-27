@@ -23,6 +23,9 @@ public class BookingService {
         final InventoryResponse inventoryResponse = inventoryServiceClient.getInventory(request.getEventId());
         System.out.println("Inventory service Response = " + inventoryResponse);
 
+        if(inventoryResponse.getCapacity() < request.getTicketCount())
+            throw new RuntimeException("Capacity less than ticket count");
+
         return BookingResponse.builder().build();
     }
 }
