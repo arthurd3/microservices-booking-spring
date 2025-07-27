@@ -1,6 +1,7 @@
 package com.arthur.orderservice.service;
 
 import com.arthur.bookingservice.event.BookingEvent;
+import com.arthur.orderservice.client.InventoryServiceClient;
 import com.arthur.orderservice.entity.Order;
 import com.arthur.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final InventoryServiceClient inventoryServiceClient;
+
 
     @KafkaListener(topics = "booking" , groupId = "order-service")
     public void orderEvent(BookingEvent bookingEvent){
@@ -24,6 +27,8 @@ public class OrderService {
 
 
         inventoryServiceClient.updateInventory(order.getEventId() , order.getTicketCount());
+
+        log.info("Order has been updated");
     }
 
     private Order createOrder(BookingEvent bookingEvent){
