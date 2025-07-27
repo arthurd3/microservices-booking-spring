@@ -1,20 +1,17 @@
-package com.arthur.inventoryservice.config;
+package com.arthur.bookingservice.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
 public class OpenApiConfig {
 
     @Bean
     public OpenAPI inventoryServiceApi() {
         return new OpenAPI()
                 .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("Inventory Service API")
-                        .description("Inventory Service API for ThuzinReal")
+                        .title("Booking Service API")
+                        .description("Booking Service API for ThuzinReal")
                         .version("v1.0.0"));
 
     }
-
 }
